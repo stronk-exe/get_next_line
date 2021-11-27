@@ -6,27 +6,27 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:53:39 by ael-asri          #+#    #+#             */
-/*   Updated: 2021/11/26 20:12:47 by ael-asri         ###   ########.fr       */
+/*   Updated: 2021/11/28 00:01:55 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr(char	*s, char c)
+int	ft_strchr(char	*s)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (s[i] == '\n')
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-char	*ft_strjoin(char const	*s1, char const	*s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -51,6 +51,7 @@ char	*ft_strjoin(char const	*s1, char const	*s2)
 		j++;
 	}
 	tab[i] = '\0';
+	free(s1);
 	return (tab);
 }
 
@@ -89,4 +90,22 @@ char	*ft_substr(char const	*s, unsigned int start, size_t	len)
 	}
 	tab[j] = '\0';
 	return (tab);
+}
+
+char	*ft_strdup(char *s1)
+{
+	int		i;
+	char	*p;
+
+	p = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (p == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		p[i] = s1[i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
 }

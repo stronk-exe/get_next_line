@@ -6,87 +6,68 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:53:10 by ael-asri          #+#    #+#             */
-/*   Updated: 2021/11/26 22:30:56 by ael-asri         ###   ########.fr       */
+/*   Updated: 2021/11/28 00:01:25 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*get_chyata(char *line)
+{
+	char	*chyata;
+	int		i;
+
+	i = 0;
+	while (line[i] != '\n' && line[i] != '\0')
+		i++;
+	chyata = ft_substr(line, i + 1, ft_strlen(line));
+	free(line);
+	line = NULL;
+	return (chyata);
+}
+
 char	*get_line(char	*line)
 {
 	int		i;
-	int		j;
-	int		t;
 	char	*temp;
-	char	*chyata;
 
 	i = 0;
-	j = 0;
-	temp = malloc(sizeof(char) * ft_strlen(line));
-	while (line[i] != '\n')
-	{
-		temp[i] = line[i];
+	while (line[i] != '\n' && line[i] != '\0')
 		i++;
-	}
-	temp[i] = line[i];
-	i++;
-	t = i;
-	while (line[t])
-	{
-		t++;
-	}
-	chyata = malloc(sizeof(char) * (t - i));
-	while (line[i])
-	{
-		chyata[j] = line[i];
-		i++;
-		j++;
-	}
-	free(line);
-	line = chyata;
+	temp = ft_substr(line, 0, i + 1);
 	return (temp);
 }
 
 char	*read_line(int fd, char *line)
 {
-	char	*buffer;
+	char		*buffer;
 	ssize_t		n;
 
 	n = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buffer == NULL)
 		return (NULL);
-	while (ft_strchr(line, '\n') == 0 && n > 0)
+	if (!line)
+		line = ft_strdup("");
+	while (ft_strchr(line) == 0 && n != 0)
 	{
 		n = read(fd, buffer, BUFFER_SIZE);
 		buffer[n] = '\0';
 		line = ft_strjoin(line, buffer);
 	}
 	free(buffer);
-	return (get_line(line));
-	//return(line);
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char		*line;
 	char			*buffer;
-	char			*buffer_read;
 
 	if (fd <= 0)
 		return (NULL);
-	return (read_line(fd, buffer));
-}
-
-
-
-#include <stdio.h>
-#include <fcntl.h>
-int main()
-{
-	int fd = open("test.txt", O_RDWR);
-	
-	printf("%s", get_next_line(fd));
-	//printf("%s", get_next_line(fd));
-	//printf("%s", get_next_line(fd));
+	line = read_line(fd, line);
+	buffer = get_line(line);
+	line = get_chyata(line);
+	return (buffer);
 }
