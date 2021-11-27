@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:53:55 by ael-asri          #+#    #+#             */
-/*   Updated: 2021/11/27 23:38:00 by ael-asri         ###   ########.fr       */
+/*   Updated: 2021/11/27 18:32:51 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char const	*s1, char const	*s2);
 int		ft_strchr(char	*s);
 size_t	ft_strlen(const char	*s);
 char	*ft_substr(char const	*s, unsigned int start, size_t	len);

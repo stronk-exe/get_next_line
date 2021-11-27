@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:53:39 by ael-asri          #+#    #+#             */
-/*   Updated: 2021/11/28 00:01:55 by ael-asri         ###   ########.fr       */
+/*   Updated: 2021/11/27 18:32:41 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strchr(char	*s)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const	*s1, char const	*s2)
 {
 	int		i;
 	int		j;
@@ -51,7 +51,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	tab[i] = '\0';
-	free(s1);
 	return (tab);
 }
 
@@ -108,4 +107,22 @@ char	*ft_strdup(char *s1)
 	}
 	p[i] = '\0';
 	return (p);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t	dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	if (dstsize == 0)
+	{
+		return (ft_strlen(src));
+	}
+	while (src[i] && i < dstsize - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }
