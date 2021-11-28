@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/21 13:53:10 by ael-asri          #+#    #+#             */
-/*   Updated: 2021/11/28 09:50:18 by ael-asri         ###   ########.fr       */
+/*   Created: 2021/11/28 10:22:44 by ael-asri          #+#    #+#             */
+/*   Updated: 2021/11/28 14:26:52 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char	*get_chyata(char *line)
+char	*get_chyata_bonus(char *line)
 {
 	char	*chyata;
 	int		i;
@@ -26,7 +26,7 @@ char	*get_chyata(char *line)
 	return (chyata);
 }
 
-char	*get_line(char	*line)
+char	*get_line_bonus(char	*line)
 {
 	int		i;
 	char	*temp;
@@ -40,7 +40,7 @@ char	*get_line(char	*line)
 	return (temp);
 }
 
-char	*read_line(int fd, char *line)
+char	*read_line_bonus(int fd, char *line)
 {
 	char		*buffer;
 	ssize_t		n;
@@ -61,40 +61,16 @@ char	*read_line(int fd, char *line)
 	return (line);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
-	static char		*line;
+   // static char *line[FOPEN_MAX];
+	//static char		*line;
 	char			*buffer;
 
 	if (fd <= 0)
 		return (NULL);
-	line = read_line(fd, line);
-	buffer = get_line(line);
-	line = get_chyata(line);
+	line[fd] = read_line_bonus(fd, line[fd]);
+	buffer = get_line_bonus(line[fd]);
+	line[fd] = get_chyata_bonus(line[fd]);
 	return (buffer);
-}
-
-#include <stdio.h>
-#include <fcntl.h>
-int main()
-{
-	// char	*line;
-	// int i = 0;
-	int fd = open("test.txt", O_RDWR);
-	// system("leaks a.out");
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	while (i < 10)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-		i++;
-	}
-	//system("leaks a.out");
 }
