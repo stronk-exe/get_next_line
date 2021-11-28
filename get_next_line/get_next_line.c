@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:53:10 by ael-asri          #+#    #+#             */
-/*   Updated: 2021/11/28 19:17:04 by ael-asri         ###   ########.fr       */
+/*   Updated: 2021/11/28 22:56:10 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,21 @@ char	*get_chyata(char *line)
 	return (chyata);
 }
 
-char	*get_line(char	*line)
+char	*get_line(char	**line)
 {
 	int		i;
 	char	*temp;
 
 	i = 0;
-	if (line[i] == '\0')
+	if (line[0][i] == '\0')
 	{
-		free(line);
+		free(*line);
+		*line = NULL;
 		return (NULL);
 	}
-	while (line[i] != '\n' && line[i] != '\0')
+	while (line[0][i] != '\n' && line[0][i] != '\0')
 		i++;
-	temp = ft_substr(line, 0, i + 1);
+	temp = ft_substr(*line, 0, i + 1);
 	return (temp);
 }
 
@@ -60,7 +61,8 @@ char	*read_line(int fd, char *line)
 		if (n < 0)
 		{
 			free(buffer);
-			free (line);
+			free(line);
+			line = NULL;
 			return (NULL);
 		}
 		buffer[n] = '\0';
@@ -75,14 +77,14 @@ char	*get_next_line(int fd)
 	static char		*line;
 	char			*buffer;
 
-	if (read(fd, "", 0) == -1)
-		return (NULL);
-	if (BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = read_line(fd, line);
-	buffer = get_line(line);
-	line = get_chyata(line);
+	if (line == NULL)
+		return (NULL);
+	buffer = get_line(&line);
 	if (buffer == NULL)
-		line = NULL;
+		return (NULL);
+	line = get_chyata(line);
 	return (buffer);
 }
